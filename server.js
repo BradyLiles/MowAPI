@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://dbuser:dbuserjackle74@ds133550.mlab.com:33550/testdb_bradyliles'); // connect to our database
+mongoose.connect('mongodb://dbuser:dbuser_Access=#1!@ds211558.mlab.com:11558/heroku_q4103nqr'); // connect to our database
 var Bear = require('./src/api/models/bear');
 
 
