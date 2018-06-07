@@ -5,12 +5,6 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://dbuser:dbuserjackle74@ds133550.mlab.com:33550/testdb_bradyliles'); // connect to our database
-var Bear = require('./src/api/models/bear');
-
-
-
 // If an incoming request uses
 // a protocol other than HTTPS,
 // redirect that request to the
@@ -31,6 +25,7 @@ const forceSSL = function() {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
@@ -47,52 +42,18 @@ router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
 });
 
-// on routes that end in /bears
-// ----------------------------------------------------
-router.route('/bears')
+var db = require('./src/data_access/queries');
+db.initDB();
 
-    // create a bear (accessed at POST http://localhost:8080/api/bears)
-    .post(function(req, res) {
-
-        var bear = new Bear();      // create a new instance of the Bear model
-        bear.name = req.body.name;  // set the bears name (comes from the request)
-
-        // save the bear and check for errors
-        bear.save(function(err) {
-            if (err) {
-                res.send(err);
-            }
-
-            res.json({ message: 'Bear created!' });
-        });
-
-    })
-
-    .get(function(req, res) {
-        Bear.find(function(err, bears) {
-            if (err)
-                res.send(err);
-
-            res.json(bears);
-        });
-    });
-
-  router.route('/bears/:bear_id')
-
-    // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
-    .get(function(req, res) {
-        Bear.findById(req.params.bear_id, function(err, bear) {
-            if (err)
-                res.send(err);
-            res.json(bear);
-        });
-    });
-
+router.get('/puppies', db.getAllPuppies);
+router.get('/puppies/:id', db.getSinglePuppy);
+router.post('/puppies', db.createPuppy);
+router.put('/puppies/:id', db.updatePuppy);
+router.delete('/puppies/:id', db.removePuppy);
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 app.use('/api', router);
-
 
 // Instruct the app
 // to use the forceSSL
@@ -115,3 +76,46 @@ app.listen(process.env.PORT || 8080);
 
 console.log('Magic happens on port');
 
+
+//var Bear = require('./src/api/models/bear');
+
+// // on routes that end in /bears
+// // ----------------------------------------------------
+// router.route('/bears')
+
+//     // create a bear (accessed at POST http://localhost:8080/api/bears)
+//     .post(function(req, res) {
+
+//         var bear = new Bear();      // create a new instance of the Bear model
+//         bear.name = req.body.name;  // set the bears name (comes from the request)
+
+//         // save the bear and check for errors
+//         bear.save(function(err) {
+//             if (err) {
+//                 res.send(err);
+//             }
+
+//             res.json({ message: 'Bear created!' });
+//         });
+
+//     })
+
+//     .get(function(req, res) {
+//         Bear.find(function(err, bears) {
+//             if (err)
+//                 res.send(err);
+
+//             res.json(bears);
+//         });
+//     });
+
+//   router.route('/bears/:bear_id')
+
+//     // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
+//     .get(function(req, res) {
+//         Bear.findById(req.params.bear_id, function(err, bear) {
+//             if (err)
+//                 res.send(err);
+//             res.json(bear);
+//         });
+//     });
