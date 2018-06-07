@@ -42,8 +42,7 @@ router.get('/', function (req, res) {
     res.json({ message: 'hooray! welcome to our api!' });
 });
 
-var db = require('./src/data_access/queries');
-db.initDB();
+var db = require('./src/api/providers/puppyProvider');
 
 router.get('/puppies', db.getAllPuppies);
 router.get('/puppies/:id', db.getSinglePuppy);
@@ -67,14 +66,16 @@ app.use(express.static(__dirname + '/dist'));
 // For all GET requests, send back index.html
 // so that PathLocationStrategy can be used
 app.get('/*', function (req, res) {
+    console.log('getting something!');
     res.sendFile(path.join(__dirname + '/dist/index.html'));
 });
 
 // Start the app by listening on the default
 // Heroku port
-app.listen(process.env.PORT || 8080);
+var port = process.env.PORT || 8080;
+app.listen(port);
 
-console.log('Magic happens on port');
+console.log('Magic happens on port', port);
 
 
 //var Bear = require('./src/api/models/bear');
