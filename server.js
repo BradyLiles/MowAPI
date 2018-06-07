@@ -9,15 +9,15 @@ const bodyParser = require('body-parser');
 // a protocol other than HTTPS,
 // redirect that request to the
 // same url but with HTTPS
-const forceSSL = function() {
-  return function (req, res, next) {
-    if (req.headers['x-forwarded-proto'] !== 'https') {
-      return res.redirect(
-       ['https://', req.get('Host'), req.url].join('')
-      );
+const forceSSL = function () {
+    return function (req, res, next) {
+        if (req.headers['x-forwarded-proto'] !== 'https') {
+            return res.redirect(
+                ['https://', req.get('Host'), req.url].join('')
+            );
+        }
+        next();
     }
-    next();
-  }
 }
 
 // configure app to use bodyParser()
@@ -31,15 +31,15 @@ app.use(bodyParser.json());
 var router = express.Router();              // get an instance of the express Router
 
 // middleware to use for all requests
-router.use(function(req, res, next) {
+router.use(function (req, res, next) {
     // do logging
     console.log('Something is happening.');
     next(); // make sure we go to the next routes and don't stop here
 });
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });   
+router.get('/', function (req, res) {
+    res.json({ message: 'hooray! welcome to our api!' });
 });
 
 var db = require('./src/data_access/queries');
@@ -66,9 +66,9 @@ app.use(express.static(__dirname + '/dist'));
 
 // For all GET requests, send back index.html
 // so that PathLocationStrategy can be used
-app.get('/*', function(req, res) {
+app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname + '/dist/index.html'));
-  });
+});
 
 // Start the app by listening on the default
 // Heroku port
