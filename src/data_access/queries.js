@@ -9,29 +9,6 @@ var pgp = require('pg-promise')(options);
 var connectionString = process.env.DATABASE_URL;
 var db = pgp( connectionString );
 
-function initDB() {
-    console.log('INIT DB');
-    db.none('CREATE TABLE IF NOT EXISTS pups (ID SERIAL PRIMARY KEY,name VARCHAR, breed VARCHAR, age INTEGER, sex VARCHAR)');
-}
-
-/*
-DROP DATABASE IF EXISTS puppies;
-CREATE DATABASE puppies;
-
-\c puppies;
-
-CREATE TABLE IF NOT EXISTS pups (
-  ID SERIAL PRIMARY KEY,
-  name VARCHAR,
-  breed VARCHAR,
-  age INTEGER,
-  sex VARCHAR
-);
-
-INSERT INTO pups (name, breed, age, sex)
-  VALUES ('Tyler', 'Retrieved', 3, 'M');
-*/
-
 function getAllPuppies(req, res, next) {
     console.log('get all puppies');
     db.any('select * from pups')
