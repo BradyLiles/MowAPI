@@ -1,20 +1,22 @@
-// var db = require('./index');
-// var sequelize = db.sequelize;
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+  var Puppy = sequelize.define('puppy', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    name: DataTypes.STRING,
+    breed: DataTypes.STRING,
+    sex: DataTypes.STRING,
+    age: DataTypes.INTEGER,
+  }, { 
+      tableName: 'puppy'
+    });
 
-// const Puppy = sequelize.define('user', {
-//     id: {
-//         type: Sequelize.INTEGER
-//     },
-//     name: {
-//         type: Sequelize.STRING
-//     },
-//     breed: {
-//         type: Sequelize.STRING
-//     },
-//     sex: {
-//         type: Sequelize.STRING
-//     },
-//     age: {
-//         type: Sequelize.INTEGER
-//     }
-// });
+  Puppy.associate = function (models) {
+   
+  };
+
+  return Puppy;
+};

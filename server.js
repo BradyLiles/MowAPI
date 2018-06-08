@@ -73,6 +73,13 @@ app.get('/*', function (req, res) {
 // Start the app by listening on the default
 // Heroku port
 var port = process.env.PORT || 8080;
+
+// models.sequelize.sync().then(() => {
+//     app.listen(3000, () => {
+//       console.log('Your Server is up and running');
+//     });
+//   });
+
 app.listen(port);
 
 console.log('Magic happens on port', port);

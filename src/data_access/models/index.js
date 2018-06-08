@@ -20,7 +20,6 @@ fs
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
   })
   .forEach(file => {
-    console.log('file', file);
     var model = sequelize['import'](path.join(__dirname, file));
     db[model.name] = model;
   });
@@ -33,24 +32,5 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-
-
-const Puppy = sequelize.define('puppy', {
-  id: {
-      type: Sequelize.INTEGER
-  },
-  name: {
-      type: Sequelize.STRING
-  },
-  breed: {
-      type: Sequelize.STRING
-  },
-  sex: {
-      type: Sequelize.STRING
-  },
-  age: {
-      type: Sequelize.INTEGER
-  }
-});
 
 module.exports = db;

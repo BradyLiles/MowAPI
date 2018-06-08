@@ -2,8 +2,6 @@ var dataContext = require('../base');
 var puppyContext = require('../models/index');
 
 function getAllPuppies() {
-
-
     return dataContext.any('SELECT * FROM Puppy');
 }
 
