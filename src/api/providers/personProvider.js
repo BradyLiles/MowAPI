@@ -1,16 +1,17 @@
 var dataAccess = require('../../data_access/models/index');
 
 var models = require('../../data_access/models');
-var puppyRepository = {}; //dataAccess.puppyRepository;
+var personRepository = {}; //dataAccess.personRepository;
 
-function getAllPuppies(req, res, next) {
-    models.puppy.findAll()
+function getAllPersons(req, res, next) {
+  console.log('get me persons');
+    models.person.findAll()
         .then(function (data) {
             res.status(200)
                 .json({
                     status: 'success',
                     data: data,
-                    message: 'Retrieved ALL puppies'
+                    message: 'Retrieved ALL persons'
                 });
         })
         .catch(function (err) {
@@ -18,16 +19,16 @@ function getAllPuppies(req, res, next) {
         });
 }
 
-function getSinglePuppy(req, res, next) {
+function getSinglePerson(req, res, next) {
 
-    var puppyId = parseInt(req.params.id);
-    models.puppy.findById(puppyId)
+    var personId = parseInt(req.params.id);
+    models.person.findById(personId)
         .then(function (data) {
             res.status(200)
                 .json({
                     status: 'success',
                     data: data,
-                    message: 'Retrieved ONE puppy'
+                    message: 'Retrieved ONE person'
                 });
         })
         .catch(function (err) {
@@ -35,15 +36,15 @@ function getSinglePuppy(req, res, next) {
         });
 }
 
-function createPuppy(req, res, next) {
+function createPerson(req, res, next) {
 
     req.body.age = parseInt(req.body.age);
-    models.puppy.create(req.body)
+    models.person.create(req.body)
         .then(function () {
             res.status(200)
                 .json({
                     status: 'success',
-                    message: 'Inserted one puppy'
+                    message: 'Inserted one person'
                 });
         })
         .catch(function (err) {
@@ -51,21 +52,21 @@ function createPuppy(req, res, next) {
         });
 }
 
-function updatePuppy(req, res, next) {
+function updatePerson(req, res, next) {
 
-    var puppyId = parseInt(req.params.id);
+    var personId = parseInt(req.params.id);
     req.body.age = parseInt(req.body.age);
 
-    return models.puppy.update(
+    return models.person.update(
         req.body,
         {
-          where: { id: puppyId }
+          where: { id: personId }
         })
         .then(function () {
             res.status(200)
                 .json({
                     status: 'success',
-                    message: 'Updated puppy'
+                    message: 'Updated person'
                 });
         })
         .catch(function (err) {
@@ -73,11 +74,11 @@ function updatePuppy(req, res, next) {
         });
 }
 
-function removePuppy(req, res, next) {
-    var puppyId = parseInt(req.params.id);
-    models.puppy.destroy({
+function removePerson(req, res, next) {
+    var personId = parseInt(req.params.id);
+    models.person.destroy({
         where: {
-            id: puppyId
+            id: personId
         }
     })
         .then(function (result) {
@@ -85,7 +86,7 @@ function removePuppy(req, res, next) {
             res.status(200)
                 .json({
                     status: 'success',
-                    message: `Removed ${result} puppy`
+                    message: `Removed ${result} person`
                 });
             /* jshint ignore:end */
         })
@@ -95,9 +96,9 @@ function removePuppy(req, res, next) {
 }
 
 module.exports = {
-    getAllPuppies: getAllPuppies,
-    getSinglePuppy: getSinglePuppy,
-    createPuppy: createPuppy,
-    updatePuppy: updatePuppy,
-    removePuppy: removePuppy
+    getAllPersons: getAllPersons,
+    getSinglePerson: getSinglePerson,
+    createPerson: createPerson,
+    updatePerson: updatePerson,
+    removePerson: removePerson
 };

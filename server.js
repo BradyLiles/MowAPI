@@ -42,13 +42,21 @@ router.get('/', function (req, res) {
     res.json({ message: 'hooray! welcome to our api!' });
 });
 
-var db = require('./src/api/providers/puppyProvider');
+var puppyProvider = require('./src/api/providers/puppyProvider');
+var personProvider = require('./src/api/providers/personProvider');
 
-router.get('/puppies', db.getAllPuppies);
-router.get('/puppies/:id', db.getSinglePuppy);
-router.post('/puppies', db.createPuppy);
-router.put('/puppies/:id', db.updatePuppy);
-router.delete('/puppies/:id', db.removePuppy);
+router.get('/puppies', puppyProvider.getAllPuppies);
+router.get('/puppies/:id', puppyProvider.getSinglePuppy);
+router.post('/puppies', puppyProvider.createPuppy);
+router.put('/puppies/:id', puppyProvider.updatePuppy);
+router.delete('/puppies/:id', puppyProvider.removePuppy);
+
+
+router.get('/persons', personProvider.getAllPersons);
+router.get('/persons/:id', personProvider.getSinglePerson);
+router.post('/persons', personProvider.createPerson);
+router.put('/persons/:id', personProvider.updatePerson);
+router.delete('/persons/:id', personProvider.removePerson);
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
